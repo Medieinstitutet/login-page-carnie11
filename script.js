@@ -1,13 +1,16 @@
 //-------------------------------------//
 //----------GLOBALA VARIABLER----------//
 //-------------------------------------//
-let logo = document.getElementById("logo");
+
+const logo = document.getElementById("logo");
 let meny = document.getElementById("meny");
 let elHeadline= document.getElementById("elHeadline");
 let elLogIn = document.getElementById("elLogIn");
-let userId = document.getElementById("userId");
+let userInput = document.getElementById("userInput");
 let password = document.getElementById("password");
-let sendBtn = document.getElementById("sendBtn");
+const sendBtn = document.getElementById("sendBtn");
+let elForgetMe = document.getElementById("elForgetMe");
+
 
 const allUsers = [
     {User: "janne", Password: "test"},
@@ -17,9 +20,42 @@ const allUsers = [
         
 ]
 
-
+console.log("running");
 
 
 //-------------------------------------//
 //--------------FUNKTIONER-------------//
 //-------------------------------------//
+
+sendBtn.addEventListener("click", () => { //Sparar user i local storage
+    //console.log(userId.value);
+    let userName = userInput.value;
+    localStorage.setItem("userName", userName);
+    console.log("Detta finns i ls: " + userName);
+    printName();
+    // whenLoggedIn();
+    
+});
+
+
+
+function printName() { //hämta namnet från ls och printa på sidan
+    let userName = localStorage.getItem("userName");
+    
+    let forgetButton = document.createElement("button"); //skapa en glömknapp
+    elForgetMe.appendChild(forgetButton);
+    forgetButton.innerText = "Forget me";
+    forgetButton.addEventListener("click", () => {
+        localStorage.removeItem("userName");
+        printUnknown;
+    })
+};
+
+function printUnknown () {
+    if (!localStorage.userName) {
+        alert("LS är tomt"); //Skriv ut att vi inte har något namn i LS
+}};
+
+// function whenLoggedIn () {
+//     elLogIn.innerHTML = "Välkommen " + userName +"." +" Du är inloggad";
+// };
