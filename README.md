@@ -13,9 +13,9 @@ Du har fått i uppgift att utveckla en inloggningssida till ett företag. Sidan 
 
 Minst 1 användare skall ha användarnamn “janne” och lösenord “test”. En lyckad inloggning skall sparas i localStorage och sidan skall komma ihåg och visa rätt vyer under tiden besökaren är inloggad.
 
-Sidan skall innehålla en meny, en del för innehåll samt en footer.
+Sidan skall innehålla en h1, en del för innehåll samt en footer.
 
-Menyn skall alltid visas och ändras dynamiskt för att visa rätt innehåll:
+h1 skall alltid visas och ändras dynamiskt för att visa rätt innehåll:
 
 En valfri logotyp eller en h1'a.
 Om besökaren ej är inloggad så skall ett inloggningsformulär visas.
