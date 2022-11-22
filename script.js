@@ -27,41 +27,36 @@ console.log("running");
 //--------------FUNKTIONER-------------//
 //-------------------------------------//
 
-sendBtn.addEventListener("click", () => { //Sparar user i local storage
-    //console.log(userId.value);
-    let userName = userInput.value;
-    localStorage.setItem("userName", userName);
-    elLogIn.style.display = "none"; 
-    elHeadline.innerHTML = "Välkommen " + userName +"!" +" Du är nu inloggad.";
+sendBtn.addEventListener("click", () => { 
+    
+    let userName = userInput.value; 
+    localStorage.setItem("userName", userName);//Sparar userinput i local storage
+    elLogIn.style.display = "none"; //Gömmer Välkommen till Jannes verkstad
+    elHeadline.innerHTML = "Välkommen " + userName +"!" +" Du är nu inloggad."; //Printar välkomstmedd med username
     printName();
     
 });
 
-// function whenLoggedIn () {
-//     elLogIn.innerHTML = "Välkommen " + userName +"." +" Du är inloggad";
-// };
+
 
 function printName() { //hämta namnet från ls och printa på sidan
     let userName = localStorage.getItem("userName");
-    
     let forgetButton = document.createElement("button"); //skapa en glömknapp
     elForgetMe.appendChild(forgetButton);
     forgetButton.innerText = "Log out";
     forgetButton.addEventListener("click", () => {
         localStorage.removeItem("userName");
-        //printUnknown;
-        if (userName) {
-            alert("LS har innehåll");
-            console.log("LS efter tömning: " +localStorage.value); } else {
-                alert("LS är tomt")
-                console.log("LS efter tömning: " +localStorage.value);
-        };
+        printUnknown();
             })};
 
-// function printUnknown () {
-//     if (localStorage.userName) {
-//         alert("LS har innehåll")} else {
-//             alert("LS är tomt)")}
-//         }; //Skriv ut att vi inte har något namn i LS
+function printUnknown () { //Kollar om LS är tomt eller ej och alertar accordingly
+    if (localStorage.getItem("userName")) {
+        alert("LS har innehåll")} else {
+            alert("LS är tomt");
+            elLogIn.style.display = "block";
+            elHeadline.innerHTML = "Välkommen till jannes verkstad";
+            elForgetMe.style.display = "none";
+            }
+        }; //Skriv ut att vi inte har något namn i LS
 
 
