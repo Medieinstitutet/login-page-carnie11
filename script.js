@@ -100,23 +100,23 @@ function skapaForgetMeBtn () {
     forgetButton.innerText = "Log out";
     forgetButton.addEventListener("click", () => {
         localStorage.removeItem("userName");
-        printLogOut();
+        elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><button id="sendBtn">Log in</button><div id=demo></div>';
+        elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
+        elForgetMe.innerHTML = "";
+        skapaSendBtnEventListener();
+        //printLogOut();
     });
 };
 
 function printLogOut () { //Kollar om LS är tomt eller ej och alertar accordingly
     if (localStorage.getItem("userName")) {
-        alert("LS har innehåll")
+        alert("LS har innehåll");
     } else {
             alert("LS är tomt");
-            elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><button id="sendBtn">Log in</button><div id=demo></div>';
-            elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
-            elForgetMe.innerHTML = "";
-            skapaSendBtnEventListener();
+            
         };
 }; //Skriv ut att vi inte har något namn i LS
 
-//nyCell.innerHTML = "<button id='myId' class='myClass'>Done!</button>"
 
 function printUnknown() {
     console.log("printUnknown");
