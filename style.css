@@ -46,3 +46,12 @@ footer{
 
 }
 
+#elForgetMe{
+    padding:40px;
+    padding-left: 600px;
+}
+
+#forgetButton {
+    height: 20px;
+    width: 30px;
+}
