@@ -54,7 +54,7 @@ function userChecker (){
         if ((userName == allUsers[i].User) && (passwordInput == allUsers[i].Password)) 
         // if (userName && passwordInput === allUsers[i])
         {
-        printName(userName); //du finns i registret
+        printName(userName, passwordInput); //du finns i registret
             return;
         } 
         else  {
@@ -64,13 +64,13 @@ function userChecker (){
     };
 };
 
-function printName(a) { 
+function printName(a,b) { 
     console.log(a);         // = //du finns i registret! 
                         //sparar uppgifter i LS, hämta namnet från ls och printa på sidan
     console.log("printName");
     //let userName1 = userInput.value; 
     let userName1 = a; 
-    let passwordInput = password.value;
+    let passwordInput = b;
     console.log("namnet var " +userName1);
     localStorage.setItem("userName1", userName1);//Sparar userinput i local storage
     localStorage.setItem("passwordInput", passwordInput);
