@@ -6,9 +6,9 @@ const logo = document.getElementById("logo");
 let meny = document.getElementById("meny");
 let elHeadline= document.getElementById("elHeadline");
 let elLogIn = document.getElementById("elLogIn");
-let userInput = document.getElementById("userInput");
-let password = document.getElementById("password");
-let sendBtn = document.getElementById("sendBtn");
+//let userInput = document.getElementById("userInput");
+//let password = document.getElementById("password");
+//let sendBtn = document.getElementById("sendBtn");
 let elForgetMe = document.getElementById("elForgetMe");
 let demo = document.getElementById("demo");
 
@@ -23,17 +23,27 @@ const allUsers = [
 ]
 
 console.log("running");
-skapaSendBtnEventListener();
+skapaLogIn();
+
+function skapaLogIn() {
+elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
+elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
+let sendBtn = document.createElement('button');
+sendBtn.innerText = "Log in";
+elLogIn.appendChild(sendBtn);
+sendBtn.addEventListener("click", () => { 
+    userChecker();
+});}
 
 //-------------------------------------//
 //--------------FUNKTIONER-------------//
 //-------------------------------------//
 
-function skapaSendBtnEventListener (){
-sendBtn.addEventListener("click", () => { 
-    //let userName = userInput.value; 
-    userChecker();
-})};
+// function skapaSendBtnEventListener (){
+// sendBtn.addEventListener("click", () => { 
+//     //let userName = userInput.value; 
+//     userChecker();
+// })};
 
 
 // function userChecker (){
@@ -100,13 +110,12 @@ function skapaForgetMeBtn () {
     forgetButton.innerText = "Log out";
     forgetButton.addEventListener("click", () => {
         localStorage.removeItem("userName");
-        elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><button id="sendBtn">Log in</button><div id=demo></div>';
         elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
         elForgetMe.innerHTML = "";
-        skapaSendBtnEventListener();
-        //printLogOut();
-    });
-};
+        skapaLogIn();
+        });
+
+    };
 
 function printLogOut () { //Kollar om LS är tomt eller ej och alertar accordingly
     if (localStorage.getItem("userName")) {
@@ -121,9 +130,7 @@ function printLogOut () { //Kollar om LS är tomt eller ej och alertar according
 function printUnknown() {
     console.log("printUnknown");
     elHeadline.innerHTML = "Felaktiga uppgifter, försök igen";
-    elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><button id="sendBtn">Log in</button><div id=demo></div>'; //Visar loginfälten
-    skapaSendBtnEventListener();
-
+    skapaLogIn();
 };
 
 
