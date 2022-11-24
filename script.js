@@ -3,7 +3,6 @@
 //-------------------------------------//
 
 const logo = document.getElementById("logo");
-let meny = document.getElementById("meny");
 let elHeadline= document.getElementById("elHeadline");
 let elLogIn = document.getElementById("elLogIn");
 //let userInput = document.getElementById("userInput");
@@ -26,19 +25,98 @@ console.log("running");
 skapaLogIn();
 
 function skapaLogIn() {
-elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
-elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
-let sendBtn = document.createElement('button');
-sendBtn.innerText = "Log in";
-elLogIn.appendChild(sendBtn);
-sendBtn.addEventListener("click", () => { 
-    userChecker();
-});}
+    elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
+    let sendBtn = document.createElement('button');
+    sendBtn.innerText = "Log in";
+    elLogIn.appendChild(sendBtn);
+    sendBtn.addEventListener("click", () => { 
+        userChecker();
+    });
+}
 
 //-------------------------------------//
 //--------------FUNKTIONER-------------//
 //-------------------------------------//
 
+
+
+
+let j = 1;
+function userChecker (){
+    console.log("j = " + j);
+    j++;
+    let userName = userInput.value; 
+    let passwordInput = password.value;
+
+    for (i=0; i<allUsers.length; i++) {
+        
+        console.log(i); // test
+        if ((userName == allUsers[i].User) && (passwordInput == allUsers[i].Password)) 
+        // if (userName && passwordInput === allUsers[i])
+        {
+        printName(userName); //du finns i registret
+            return;
+        } 
+        else  {
+            console.log(userName + " är inte " + allUsers[i].User);
+            printUnknown()
+        };//Du finns inte i registret  
+    };
+};
+
+function printName(a) { 
+    console.log(a);         // = //du finns i registret! 
+                        //sparar uppgifter i LS, hämta namnet från ls och printa på sidan
+    console.log("printName");
+    //let userName1 = userInput.value; 
+    let userName1 = a; 
+    let passwordInput = password.value;
+    console.log("namnet var " +userName1);
+    localStorage.setItem("userName1", userName1);//Sparar userinput i local storage
+    localStorage.setItem("passwordInput", passwordInput);
+    userName1 = localStorage.getItem("userName1");
+    passwordInput = localStorage.getItem("passwordInput");
+    elHeadline.innerHTML = "Välkommen " + userName1 + "!" +" Du är nu inloggad."; //Printar välkomstmedd med username
+    elLogIn.innerHTML = ""; //Gömmer loginfälten
+    skapaForgetMeBtn();
+};
+
+function skapaForgetMeBtn () {
+    let forgetButton = document.createElement("button"); //skapa en glömknapp
+    elForgetMe.appendChild(forgetButton);
+    forgetButton.innerText = "Log out";
+    forgetButton.addEventListener("click", () => {
+        localStorage.removeItem("userName");
+        localStorage.removeItem("passwordInput");
+        elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
+        elForgetMe.innerHTML = "";
+        skapaLogIn();
+    });
+};
+
+// function printLogOut () { //Kollar om LS är tomt eller ej och alertar accordingly
+//     if (localStorage.getItem("userName")) {
+//         alert("LS har innehåll");
+//     } else {
+//             alert("LS är tomt");
+            
+//         };
+// }; //Skriv ut att vi inte har något namn i LS
+
+
+function printUnknown() {   //Du finns inte i registret!
+    console.log("printUnknown");
+    elHeadline.innerHTML = "Felaktiga uppgifter, försök igen";
+    skapaLogIn();
+};
+
+
+
+
+
+
+
+//Inkopierad före ändringar // function userChecker (){ //funktion som loopar arrayen och kollar om inputnamnet finns i arrayen
 // function skapaSendBtnEventListener (){
 // sendBtn.addEventListener("click", () => { 
 //     //let userName = userInput.value; 
@@ -73,70 +151,3 @@ sendBtn.addEventListener("click", () => {
 //                 printUnknown();
 //           }             
 // };
-
-
-
-
-
-let j = 1;
-function userChecker (){
-    console.log("j = " + j);
-    j++;
-    for (i=0; i<allUsers.length; i++) {
-        let userName = userInput.value; 
-        console.log(i); // test
-        if (userName === allUsers[i].User) {
-                //du finns i registret
-            printName();
-            break; 
-        }
-        else  {printUnknown()};//Du finns inte i registret
-    };
-};
-
-function printName() { //spara namnet i LS, hämta namnet från ls och printa på sidan
-    console.log("printName");
-    let userName = userInput.value; 
-    localStorage.setItem("userName", userName);//Sparar userinput i local storage
-    userName = localStorage.getItem("userName");
-    elHeadline.innerHTML = "Välkommen " + userName +"!" +" Du är nu inloggad."; //Printar välkomstmedd med username
-    elLogIn.innerHTML = ""; //Gömmer loginfälten
-    skapaForgetMeBtn();
-};
-
-function skapaForgetMeBtn () {
-    let forgetButton = document.createElement("button"); //skapa en glömknapp
-    elForgetMe.appendChild(forgetButton);
-    forgetButton.innerText = "Log out";
-    forgetButton.addEventListener("click", () => {
-        localStorage.removeItem("userName");
-        elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
-        elForgetMe.innerHTML = "";
-        skapaLogIn();
-        });
-
-    };
-
-function printLogOut () { //Kollar om LS är tomt eller ej och alertar accordingly
-    if (localStorage.getItem("userName")) {
-        alert("LS har innehåll");
-    } else {
-            alert("LS är tomt");
-            
-        };
-}; //Skriv ut att vi inte har något namn i LS
-
-
-function printUnknown() {
-    console.log("printUnknown");
-    elHeadline.innerHTML = "Felaktiga uppgifter, försök igen";
-    skapaLogIn();
-};
-
-
-
-
-
-
-
-//Inkopierad före ändringar // function userChecker (){ //funktion som loopar arrayen och kollar om inputnamnet finns i arrayen
