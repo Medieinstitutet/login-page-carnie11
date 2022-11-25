@@ -20,9 +20,35 @@ const allUsers = [
     {User: "Bulen", Password: "fåglar"}
         
 ]
-
 console.log("running");
-skapaLogIn();
+checkLocalStorage();
+
+
+
+
+
+//-------------------------------------//
+//--------------FUNKTIONER-------------//
+//-------------------------------------//
+
+function checkLocalStorage() { 
+    if (localStorage.userName) {
+        displayUserInLS ();
+    }else{
+        skapaLogIn();
+    };
+}
+
+// function skapaLogIn() {      //Alternativ funktion med added LS-check
+//     if (!localStorage.userName) { elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
+//     let sendBtn = document.createElement('button');
+//     sendBtn.innerText = "Log in";
+//     elLogIn.appendChild(sendBtn);
+//     sendBtn.addEventListener("click", () => { 
+//         userChecker() } ) } else{
+//         console.log("det är någon här");
+//         }
+// }
 
 function skapaLogIn() {
     elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
@@ -34,11 +60,12 @@ function skapaLogIn() {
     });
 }
 
-//-------------------------------------//
-//--------------FUNKTIONER-------------//
-//-------------------------------------//
 
-
+function displayUserInLS () {
+    elHeadline.innerHTML = "Välkommen " + localStorage.getItem("userName") + "!" +" Du är nu inloggad.";
+    elLogIn.innerHTML = ""; //Gömmer loginfälten
+    skapaForgetMeBtn();
+}
 
 
 let j = 1;
@@ -69,17 +96,19 @@ function printName(a,b) {
                         //sparar uppgifter i LS, hämta namnet från ls och printa på sidan
     console.log("printName");
     //let userName1 = userInput.value; 
-    let userName1 = a; 
+    let userName = a; 
     let passwordInput = b;
-    console.log("namnet var " +userName1);
-    localStorage.setItem("userName1", userName1);//Sparar userinput i local storage
+    console.log("namnet var " +userName);
+    localStorage.setItem("userName", userName);//Sparar userinput i local storage
     localStorage.setItem("passwordInput", passwordInput);
-    userName1 = localStorage.getItem("userName1");
+    userName = localStorage.getItem("userName");
     passwordInput = localStorage.getItem("passwordInput");
-    elHeadline.innerHTML = "Välkommen " + userName1 + "!" +" Du är nu inloggad."; //Printar välkomstmedd med username
+    elHeadline.innerHTML = "Välkommen " + userName + "!" +" Du är nu inloggad."; //Printar välkomstmedd med username
     elLogIn.innerHTML = ""; //Gömmer loginfälten
     skapaForgetMeBtn();
 };
+
+
 
 function skapaForgetMeBtn () {
     let forgetButton = document.createElement("button"); //skapa en glömknapp
@@ -150,4 +179,4 @@ function printUnknown() {   //Du finns inte i registret!
 //         } else {
 //                 printUnknown();
 //           }             
-// };
+// };  
