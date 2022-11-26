@@ -2,28 +2,24 @@
 //----------GLOBALA VARIABLER----------//
 //-------------------------------------//
 
-const logo = document.getElementById("logo");
 let elHeadline= document.getElementById("elHeadline");
 let elLogIn = document.getElementById("elLogIn");
-//let userInput = document.getElementById("userInput");
-//let password = document.getElementById("password");
-//let sendBtn = document.getElementById("sendBtn");
 let elForgetMe = document.getElementById("elForgetMe");
-let demo = document.getElementById("demo");
 
-
-
-const allUsers = [
+let allUsers = [
     {User: "janne", Password: "test"},
     {User: "Calle", Password: "gone_fishing"},
     {User: "Sam", Password: "fraud"},
     {User: "Bulen", Password: "fåglar"}
-        
 ]
+
+
+//-------------------------------------//
+//-----------------RUN-----------------//
+//-------------------------------------//
+
 console.log("running");
 checkLocalStorage();
-
-
 
 
 
@@ -31,7 +27,8 @@ checkLocalStorage();
 //--------------FUNKTIONER-------------//
 //-------------------------------------//
 
-function checkLocalStorage() { 
+
+function checkLocalStorage() {                          //Kollar om någon är inloggad, dvs sparad i LS
     if (localStorage.userName) {
         displayUserInLS ();
     }else{
@@ -39,19 +36,10 @@ function checkLocalStorage() {
     };
 }
 
-// function skapaLogIn() {      //Alternativ funktion med added LS-check
-//     if (!localStorage.userName) { elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
-//     let sendBtn = document.createElement('button');
-//     sendBtn.innerText = "Log in";
-//     elLogIn.appendChild(sendBtn);
-//     sendBtn.addEventListener("click", () => { 
-//         userChecker() } ) } else{
-//         console.log("det är någon här");
-//         }
-// }
 
-function skapaLogIn() {
-    elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input><div id=demo></div>';
+
+function skapaLogIn() {                                 //Skapar inputrutor och button för att kunna logga in
+    elLogIn.innerHTML = '<input id="userInput" type="text" placeholder="Username"> </input><input id="password" type="text" placeholder="Password"> </input>';
     let sendBtn = document.createElement('button');
     sendBtn.innerText = "Log in";
     elLogIn.appendChild(sendBtn);
@@ -61,80 +49,59 @@ function skapaLogIn() {
 }
 
 
-function displayUserInLS () {
+function displayUserInLS () {                           //Visar vem som är inloggad, dvs sparad i LS
     elHeadline.innerHTML = "Välkommen " + localStorage.getItem("userName") + "!" +" Du är nu inloggad.";
-    elLogIn.innerHTML = ""; //Gömmer loginfälten
-    skapaForgetMeBtn();
+    elLogIn.innerHTML = "";                             //Gömmer loginfälten
+    skapaForgetMeBtn();                                 //Skapar logoutbutton
 }
 
 
-let j = 1;
-function userChecker (){
-    console.log("j = " + j);
-    j++;
-    let userName = userInput.value; 
+function userChecker () {                                //Kollar om användaren redan finns i registret
+    let userName = userInput.value;                     //Hämtar de värden som skrivits in
     let passwordInput = password.value;
 
-    for (i=0; i<allUsers.length; i++) {
+    for (i=0; i<allUsers.length; i++) {                 //Loopar genom arrayen av registrerade användare
         
-        console.log(i); // test
         if ((userName == allUsers[i].User) && (passwordInput == allUsers[i].Password)) 
-        // if (userName && passwordInput === allUsers[i])
-        {
-        printName(userName, passwordInput); //du finns i registret
+        {printName(userName, passwordInput);            //du finns i registret, skicka med inputvärdena ut ur funktionen
             return;
-        } 
-        else  {
-            console.log(userName + " är inte " + allUsers[i].User);
+        } else {                                        //Du finns inte i registret      
             printUnknown()
-        };//Du finns inte i registret  
+        };
     };
 };
 
-function printName(a,b) { 
-    console.log(a);         // = //du finns i registret! 
-                        //sparar uppgifter i LS, hämta namnet från ls och printa på sidan
-    console.log("printName");
-    //let userName1 = userInput.value; 
-    let userName = a; 
+function printName(a,b) {                           //Detta händer om du finns i registret (sparar uppgifter i LS, hämta namnet från ls och printa på sidan )
+    let userName = a;                               //Sätter värdet till det som skrivit in vid inlogg
     let passwordInput = b;
-    console.log("namnet var " +userName);
-    localStorage.setItem("userName", userName);//Sparar userinput i local storage
-    localStorage.setItem("passwordInput", passwordInput);
+    localStorage.setItem("userName", userName);     //Sparar userinput i local storage
+    localStorage.setItem("passwordInput", passwordInput); 
     userName = localStorage.getItem("userName");
     passwordInput = localStorage.getItem("passwordInput");
     elHeadline.innerHTML = "Välkommen " + userName + "!" +" Du är nu inloggad."; //Printar välkomstmedd med username
-    elLogIn.innerHTML = ""; //Gömmer loginfälten
-    skapaForgetMeBtn();
+    elLogIn.innerHTML = "";                         //Tar bort loginfälten
+    skapaForgetMeBtn();                             //Skapar logoutbutton
 };
 
 
 
-function skapaForgetMeBtn () {
-    let forgetButton = document.createElement("button"); //skapa en glömknapp
+function skapaForgetMeBtn () {                       //Skapar logout button
+    let forgetButton = document.createElement("button"); 
     elForgetMe.appendChild(forgetButton);
     forgetButton.innerText = "Log out";
-    forgetButton.addEventListener("click", () => {
-        localStorage.removeItem("userName");
+
+    forgetButton.addEventListener("click", () => { //Skapar eventlistener
+        localStorage.removeItem("userName");        //Tömmer LS
         localStorage.removeItem("passwordInput");
         elHeadline.innerHTML = "Välkommen till Jannes fräsiga verkstad";
-        elForgetMe.innerHTML = "";
-        skapaLogIn();
+        elForgetMe.innerHTML = "";                  //Tar bort logoutbutton
+        skapaLogIn();                               //Skapar loginfältet
     });
 };
 
-// function printLogOut () { //Kollar om LS är tomt eller ej och alertar accordingly
-//     if (localStorage.getItem("userName")) {
-//         alert("LS har innehåll");
-//     } else {
-//             alert("LS är tomt");
-            
-//         };
-// }; //Skriv ut att vi inte har något namn i LS
 
 
-function printUnknown() {   //Du finns inte i registret!
-    console.log("printUnknown");
+function printUnknown() {   //Detta händer om du inte finns i arrayen
     elHeadline.innerHTML = "Felaktiga uppgifter, försök igen";
     skapaLogIn();
 };
@@ -145,38 +112,3 @@ function printUnknown() {   //Du finns inte i registret!
 
 
 
-//Inkopierad före ändringar // function userChecker (){ //funktion som loopar arrayen och kollar om inputnamnet finns i arrayen
-// function skapaSendBtnEventListener (){
-// sendBtn.addEventListener("click", () => { 
-//     //let userName = userInput.value; 
-//     userChecker();
-// })};
-
-
-// function userChecker (){
-//     console.log(i);
-//     i++;
-
-//     let person = userInput.value;
-//     console.log(person);
-    
-//     let match = allUsers.find(item => {                 //Alternativ function (.find) i UserChecker
-//         if (person == item.User) return true;
-//         else return false;
-//     });
-
-//     let losenord = password.value;
-//     console.log(losenord);
-//     let match2 = allUsers.find(item => {
-//         if (losenord == item.Password) return true;
-//         else return false;
-//     });
-
-//     console.log("Det här är vad som finns i match: " + match)
-//         if (match && match2) {
-//             printName();  
-//             exit; 
-//         } else {
-//                 printUnknown();
-//           }             
-// };  
